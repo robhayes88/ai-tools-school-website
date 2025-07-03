@@ -1,6 +1,7 @@
 import { Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import Image from "next/image";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -32,8 +33,18 @@ function Header() {
         margin: "0 auto",
         padding: "0 1rem"
       }}>
-        <Link href="/" style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.5rem", letterSpacing: "-1px" }}>
-          AI Tools School
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}>
+          <Image
+            src="/images/logo.png"
+            alt="AI Tools School logo"
+            width={44}
+            height={44}
+            style={{ borderRadius: 8, background: "#fff" }}
+            priority
+          />
+          <span style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "1.5rem", letterSpacing: "-1px", color: "#fff" }}>
+            AI Tools School
+          </span>
         </Link>
         <ul style={{ display: "flex", gap: "1.5rem", listStyle: "none" }}>
           <li><Link href="/">Home</Link></li>
