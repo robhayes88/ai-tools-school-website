@@ -21,17 +21,29 @@ const programs = [
 
 export default function Home() {
   return (
-    <section className={styles.page}>
-      <header style={{ textAlign: "center", marginBottom: "2.5rem" }}>
-        <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "2.5rem", color: "#1F6FEB", marginBottom: "1rem" }}>
+    <section style={{ position: "relative", width: "100%", minHeight: 420, marginBottom: "2.5rem", overflow: "hidden", borderRadius: 18, boxShadow: "0 2px 16px rgba(31,111,235,0.08)" }}>
+      <video
+        src="/videos/hero-typing.mp4"
+        autoPlay
+        muted
+        playsInline
+        style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", objectFit: "cover", zIndex: 0 }}
+        poster=""
+        loop={false}
+        controls={false}
+        preload="auto"
+        onEnded={e => e.target.pause()}
+      />
+      <div style={{ position: "relative", zIndex: 1, width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "4.5rem 1rem 4rem 1rem", background: "rgba(31,111,235,0.10)" }}>
+        <h1 style={{ fontFamily: "var(--font-montserrat)", fontWeight: 700, fontSize: "2.5rem", color: "#1F6FEB", marginBottom: "1rem", textAlign: "center", textShadow: "0 2px 8px #fff8" }}>
           Learn AI Tools with Confidence
         </h1>
-        <p style={{ fontFamily: "var(--font-open-sans)", fontSize: "1.25rem", color: "#333", maxWidth: 600, margin: "0 auto" }}>
+        <p style={{ fontFamily: "var(--font-open-sans)", fontSize: "1.25rem", color: "#333", maxWidth: 600, margin: "0 auto", textAlign: "center", textShadow: "0 1px 4px #fff8" }}>
           Friendly, clear, and playful guidance to help you master the latest AI tools—no tech jargon required.
         </p>
-      </header>
+      </div>
 
-      <section style={{ display: "flex", flexWrap: "wrap", gap: "2rem", justifyContent: "center", marginBottom: "2.5rem" }}>
+      <section style={{ display: "flex", flexWrap: "wrap", gap: "2rem", justifyContent: "center", margin: "2.5rem 0" }}>
         {programs.map((program) => (
           <article key={program.slug} style={{
             border: "1px solid #eee",
