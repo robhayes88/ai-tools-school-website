@@ -1,6 +1,11 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand-blue: #1F6FEB;
+  --brand-dark: #333333;
+  --brand-light: #F5F5F5;
+  --background: #fff;
+  --foreground: var(--brand-dark);
+  --heading-font: var(--font-montserrat, Montserrat, Arial, sans-serif);
+  --body-font: var(--font-open-sans, Open Sans, Arial, sans-serif);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,9 +24,16 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--body-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--heading-font);
+  color: var(--brand-blue);
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 * {
@@ -31,8 +43,57 @@ body {
 }
 
 a {
-  color: inherit;
+  color: var(--brand-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.18s;
+}
+
+a:hover, a:focus {
+  color: #174bb5;
+  text-decoration: underline;
+}
+
+button, .button, input[type="submit"] {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  background: var(--brand-blue);
+  color: #fff;
+  border: none;
+  border-radius: 32px;
+  padding: 0.7em 2em;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(31,111,235,0.10);
+  font-size: 1rem;
+  transition: background 0.18s;
+}
+
+button:hover, .button:hover, input[type="submit"]:hover {
+  background: #174bb5;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.2rem;
+  padding: 0;
+  margin: 0;
+}
+
+nav a {
+  color: var(--brand-blue);
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 1rem;
   text-decoration: none;
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  transition: background 0.18s, color 0.18s;
+}
+
+nav a:hover, nav a:focus {
+  background: var(--brand-light);
+  color: #174bb5;
 }
 
 @media (prefers-color-scheme: dark) {
