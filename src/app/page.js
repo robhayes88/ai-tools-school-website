@@ -1,3 +1,4 @@
+'use client';
 import Link from "next/link";
 import styles from "./page.module.css";
 import { useRef, useState, useEffect, useCallback } from "react";
