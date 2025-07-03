@@ -8,7 +8,7 @@ const courses = [
     nextDate: "July 15, 2024",
   },
   {
-    title: "ChatGPT for Sales",
+    title: "ChatGPT for Sales People",
     slug: "chatgpt-sales",
     description: "Boost your sales workflow and close more deals using AI.",
     nextDate: "August 2, 2024",

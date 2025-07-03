@@ -8,7 +8,7 @@ const programs = [
     description: "Find and hire smarter with AI-powered tools.",
   },
   {
-    title: "ChatGPT for Sales",
+    title: "ChatGPT for Sales People",
     slug: "chatgpt-sales",
     description: "Boost your sales workflow and close more deals using AI.",
   },
