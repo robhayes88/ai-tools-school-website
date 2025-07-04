@@ -29,6 +29,9 @@ function ProgramCarousel() {
   const [centerIdx, setCenterIdx] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const cardCount = programs.length;
+  
+  // Create infinite carousel by duplicating the programs array
+  const infinitePrograms = [...programs, ...programs, ...programs]; // 3x for smooth infinite scroll
 
   // Scroll to a card by index
   const scrollToCard = useCallback((idx) => {
@@ -40,11 +43,22 @@ function ProgramCarousel() {
     }
   }, []);
 
-  // Auto-advance logic
+  // Auto-advance logic with infinite scroll
   useEffect(() => {
     if (isHovered) return;
     const timer = setInterval(() => {
-      setCenterIdx((prev) => (prev + 1) % cardCount);
+      setCenterIdx((prev) => {
+        const nextIdx = prev + 1;
+        // When we reach the end of the middle set, jump to the beginning of the middle set
+        if (nextIdx >= cardCount * 2) {
+          // Jump back to the middle set seamlessly
+          setTimeout(() => {
+            setCenterIdx(cardCount);
+          }, 300); // Wait for scroll animation
+          return cardCount;
+        }
+        return nextIdx;
+      });
     }, 3000);
     return () => clearInterval(timer);
   }, [isHovered, cardCount]);
@@ -61,7 +75,7 @@ function ProgramCarousel() {
     const { scrollLeft, offsetWidth } = carousel;
     let minDist = Infinity;
     let idx = 0;
-    for (let i = 0; i < cardCount; i++) {
+    for (let i = 0; i < infinitePrograms.length; i++) {
       const card = carousel.children[i];
       const cardCenter = card.offsetLeft + card.offsetWidth / 2;
       const carouselCenter = scrollLeft + offsetWidth / 2;
@@ -74,6 +88,33 @@ function ProgramCarousel() {
     setCenterIdx(idx);
   };
 
+  // Handle arrow navigation with infinite scroll
+  const handleArrowClick = (direction) => {
+    setCenterIdx((prev) => {
+      let nextIdx;
+      if (direction === 'left') {
+        nextIdx = prev - 1;
+        // When going left past the middle set, jump to the end of the middle set
+        if (nextIdx < cardCount) {
+          setTimeout(() => {
+            setCenterIdx(cardCount * 2 - 1);
+          }, 300);
+          return cardCount * 2 - 1;
+        }
+      } else {
+        nextIdx = prev + 1;
+        // When going right past the middle set, jump to the beginning of the middle set
+        if (nextIdx >= cardCount * 2) {
+          setTimeout(() => {
+            setCenterIdx(cardCount);
+          }, 300);
+          return cardCount;
+        }
+      }
+      return nextIdx;
+    });
+  };
+
   return (
     <div
       className={styles.carouselContainer}
@@ -83,7 +124,7 @@ function ProgramCarousel() {
       <button
         className={`${styles.carouselArrow} ${styles.left}`}
         aria-label="Scroll left"
-        onClick={() => setCenterIdx((prev) => (prev - 1 + cardCount) % cardCount)}
+        onClick={() => handleArrowClick('left')}
         tabIndex={0}
         type="button"
       >
@@ -97,9 +138,9 @@ function ProgramCarousel() {
         role="region"
         aria-label="Programs carousel"
       >
-        {programs.map((program, idx) => (
+        {infinitePrograms.map((program, idx) => (
           <article
-            key={program.slug}
+            key={`${program.slug}-${idx}`}
             className={
               idx === centerIdx
                 ? `${styles.carouselCard} ${styles.focused}`
@@ -145,7 +186,7 @@ function ProgramCarousel() {
       <button
         className={`${styles.carouselArrow} ${styles.right}`}
         aria-label="Scroll right"
-        onClick={() => setCenterIdx((prev) => (prev + 1) % cardCount)}
+        onClick={() => handleArrowClick('right')}
         tabIndex={0}
         type="button"
       >
